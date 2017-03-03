@@ -5,18 +5,10 @@
 
 
 int main() {
-
-    char c;
-    printf("Enter a character: ");
-
-    // Reads character input from the user
-    scanf("%c", &c);
-
-    // %d displays the integer value of a character
-    // %c displays the actual character
-    printf("ASCII value of %c = %d", c, c);
-
-
+    /*root = NULL;
+    struct tnode *temp = btAlloc();
+    if(!temp)
+    printf("its null!");*/
     userSelection();
     return 0;
 }

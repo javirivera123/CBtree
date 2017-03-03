@@ -5,8 +5,17 @@
 #include <string.h>
 
 
+
+
 char line[];
 
+struct tnode *btAlloc(){
+    struct tnode *t =  (struct tnode*) malloc(sizeof(struct tnode));
+    t->left = t->right = NULL;
+    t->name = NULL;
+    t = NULL;
+    return t;
+}
 
 void userSelection(){
     int input;
@@ -15,29 +24,18 @@ void userSelection(){
     scanf("%d", &input);
     switch (input){
         case 1 :
-            /*
-            FILE *file;
-            size_t nread;
-
-            file = fopen("file.txt", "r");
-            if (file) {
-                printf("entered\n");
-                while ((nread = fread(line, 1, sizeof line, file)) > 0)
-                    fwrite(line, 1, nread, stdout);
-                printf("%s" , line);
-                fclose(file);
-            }*/
-
-
-            strcpy(line,"woop woop");
+            strcpy(line,"woop woop");              /*testing insert*/
             printf("entering 1st root insertion\n");
-            root = insert(root, line);
+            root = btAlloc();
+            root = insert(root,line);
+            printf("has exited insert method\n");
+            printf("%s",root->name);
             break;
         case 2 :
-            delete();
+           /* employeeDelete();*/
             break;
         case 3 :
-            /*list();*/
+            list();
             break;
         case 4 :
             printf("Bye... \n ");
@@ -54,13 +52,11 @@ void userSelection(){
 
 struct tnode* insert(struct tnode *r, char *line){
 
-    /* struct tnode *temp;
-    temp = (struct tnode*)malloc(sizeof(r));*/
-
     printf("has entered insert ..\n");
-    if(r) {
+    if(!r) {
         printf("inserting..\n");
-        r = create(r, line);
+        r = (struct tnode*) malloc(sizeof(struct tnode)); //allocates mem for new tree
+        r = create(line);
     }
 
 
@@ -78,18 +74,23 @@ struct tnode* insert(struct tnode *r, char *line){
 
 struct tnode* create(struct tnode *r, char *line){
 
-    r = (struct node*) malloc(sizeof(struct tnode)); //allocates mem for new tree
+    printf("allocating mem for bst...\n");
+    struct tnode *tree = malloc(sizeof(struct tnode));
+
+
     r->right = NULL;
     r->left = NULL;
     r->name = line;
 
+    printf("returning tree\n");
     return r;
 }
-void delete(){
 
-}
 
-void list(){
+void list(struct tnode *r){
+    if (!r){
+
+    }
 
 }
 

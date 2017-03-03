@@ -2,19 +2,25 @@
 #define CBTREE_TREE_H
 #define NULL 0
 
+struct tnode;
+
 typedef struct tnode{
     struct tnode *left;
     struct tnode *right;
     char *name;
   };
-struct tnode* root;
+struct tnode *root;
 
+
+struct tnode *btAlloc();
 
 /* gets user input */
 void userSelection();
 /*delete name */
-void delete();
+void employeeDelete();
+
 /*list name */
+
 void list();
 /*create*/
 struct tnode* create();
