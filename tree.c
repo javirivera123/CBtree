@@ -10,6 +10,8 @@
 char line[];
 
 struct tnode *btAlloc(){
+    printf("entered bt alloc...\n");
+
     struct tnode *t =  (struct tnode*) malloc(sizeof(struct tnode));
     t->left = t->right = NULL;
     t->name = NULL;
@@ -24,9 +26,9 @@ void userSelection(){
     scanf("%d", &input);
     switch (input){
         case 1 :
-            strcpy(line,"woop woop");              /*testing insert*/
+           /*h4h55re/* strcpy(line,"woop woop");              /*testing insert*/
             printf("entering 1st root insertion\n");
-            root = btAlloc();
+            root = btAlloc();                     /*allocating memory for root*/
             root = insert(root,line);
             printf("has exited insert method\n");
             printf("%s",root->name);
@@ -54,9 +56,8 @@ struct tnode* insert(struct tnode *r, char *line){
 
     printf("has entered insert ..\n");
     if(!r) {
-        printf("inserting..\n");
-        r = (struct tnode*) malloc(sizeof(struct tnode)); //allocates mem for new tree
-        r = create(line);
+        printf("inserting...\n");
+        r = create(&r,line);
     }
 
 
@@ -74,6 +75,7 @@ struct tnode* insert(struct tnode *r, char *line){
 
 struct tnode* create(struct tnode *r, char *line){
 
+    printf("entered create..\n");
     printf("allocating mem for bst...\n");
     struct tnode *tree = malloc(sizeof(struct tnode));
 
