@@ -21,11 +21,13 @@ the binary search tree implementation of the system.
 To compile:
 
 $ make
-To test it, try:
+
+To run program:
 
 $ make demo
-To run program
+
+To delete binaries:
 
 $ make clean
-To delete binaries:
+
 
