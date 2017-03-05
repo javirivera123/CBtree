@@ -1,15 +1,22 @@
-# CBtree
-arch1-linked-list-demo
-
-My name is javi
+#Personnel Management System
 
 This directory contains:
 
-code that implements a linked list of strings
-a demo program that uses it
-The demo program reads lines from stdin. Each line is appended onto a linked list. After end-of-file is read, the lines are printed out.
+code that implements a binary search tree of strings,
+a btree program that uses it
+The btree program executes a simple UI that allows the user to 
+select 1 of 6 option
+1: insert employee 
+2: delete employee 
+3: list employees 
+4: read file
+5: write to file
+6: quit
 
-This demo contains the following files: llist.h: header file of llist structure & "public" interface functions llist.c: implementation of linked list listDemo.c: a demonstration program that uses the linked list
+
+This demo contains the following files: tree.h: header file of tnode structure & "public" interface functions 
+tree.c: implementation of Personnel Management System btree.c: a demonstration program that uses the UI to demonstrate 
+the binary search tree implementation of the system.
 
 To compile:
 
@@ -17,29 +24,8 @@ $ make
 To test it, try:
 
 $ make demo
-To delete binaries:
+To run program
 
 $ make clean
-Things to figure out
+To delete binaries:
 
-Examine llist.h. It defines llist's structures and declares llist's interface.
-seriously, look at the comments too.
-notice how the #ifndef/endif at the top/botom prevents multiple inclusion
-Peek at llist.c to see how llist's functions are implemented. Be sure to check out how llCheck, llDoCheck and doCheck interact.
-Peek at llistDemo to see how llist is used.
-Be sure you understand how these codes use malloc() and free().
-Notice how the Makefile specifies
-dependencies
-the default production (the first one, which happens to be called "all")
-how each .o file has its own productions specifying prerequisite source & include files (why?)
-how the (in this case, one) program is its own production specifying prerequisite .o files
-the demo production. Notice
-which strings are quoted
-what the parentheses and pipe (|) symbol are doing
-Try extending llist. Perhaps
-adding llGet() method to llist.c and llist.h
-that discards the first item and returns the string it contained
-writing another demo (probably starting with ours) that tests llGet().
-be sure to use llCheck
-and adding Makefile productions to compile & test it
-the same as above, but now add llReverse that reverses list order to llist.c

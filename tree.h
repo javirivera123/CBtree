@@ -2,14 +2,17 @@
 #define CBTREE_TREE_H
 #define NULL 0
 
-struct tnode;
+char *fgets(char *str, int n, FILE *stream);
 
-typedef struct tnode{
+struct tnode{
     struct tnode *left;
     struct tnode *right;
-    char *name;
+    char name[1024];
   };
+
 struct tnode *root;
+
+
 
 
 struct tnode *btAlloc();
@@ -18,6 +21,8 @@ struct tnode *btAlloc();
 void userSelection();
 /*delete name */
 void employeeDelete();
+struct tnode* employeeDelete2(struct tnode *r, char *empName);
+void enterName();
 
 /*list name */
 
@@ -25,7 +30,11 @@ void list();
 /*create*/
 struct tnode* create();
 
+void readFile();
+void writeFile();
 struct tnode* insert(struct tnode *r, char *line);
+
+struct tnode* minSearch(struct tnode *r);
 
 
 
