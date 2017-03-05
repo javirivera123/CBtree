@@ -30,4 +30,8 @@ To delete binaries:
 
 $ make clean
 
+RESOURCES:
 
+for printing tree in tree structure: https://www.daniweb.com/programming/software-development/threads/146112/printing-a-binary-tree
+reference for deletion: http://www.thelearningpoint.net/computer-science/trees/binary-search-trees---c-program-source-code-and-documentation
+printing twice bug on read file: http://stackoverflow.com/questions/26668892/data-being-printed-out-twice-when-using-fread
