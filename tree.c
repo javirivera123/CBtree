@@ -3,12 +3,11 @@
 #include "tree.h"
 #include <ctype.h>
 #include <string.h>
-#include <stdbool.h>  /*http://stackoverflow.com/questions/1921539/using-boolean-values-in-c*/
 
 char *line[1024];
 char *empN[1024];
-char *p;
 
+/* allocates memory for new node */
 struct tnode *btAlloc(){
     struct tnode *t =  (struct tnode*) malloc(sizeof(struct tnode));
     t->left = t->right = NULL;
@@ -16,13 +15,15 @@ struct tnode *btAlloc(){
     return t;
 }
 
+/*insertion name wrapper*/
 void enterName(){
-    printf("Please enter the name:");
+    printf ("Please enter the name:");
     getchar();
     fgets(line, 1024, stdin);
 
     root = insert(root, line);
 }
+
 
 void userSelection() {
 
@@ -30,7 +31,7 @@ void userSelection() {
     int input;
     LOOP:
     if (i == 0) {
-        printf("What would you like to do?\n");
+        printf("\n\nWhat would you like to do?\n");
         printf("1: insert employee\n2: delete employee\n3: list employees\n4: read file\n");
         printf("5: write to file\n6: quit\n");
 
@@ -65,30 +66,32 @@ void userSelection() {
     }
 }
 
+/* main insertion funtion */
+struct tnode* insert(struct tnode *r, char *line) {
 
 
-
-
-struct tnode* insert(struct tnode *r, char *line){
-
-    if(!r) {
+    if (!r) {                               /* whens on correct child node */
         printf("inserting...\n");
-        struct tnode *temp =  btAlloc(line);
+        struct tnode *temp = btAlloc(line);
         return temp;
     }
 
+    if (strcmp(r->name, line) == 0) {
+        printf("HEADS UP! Someone with same name already exists in file...\n");
+    }
 
-    if( strcmp(line,r->name) < 0 ){        /*compares if should be in left subtree*/
-        //printf("goin down left\n");
+    if( strcmp(line,r->name) < 0 ){        /* compares if should be in left subtree, uses ASCII values*/
         r->left = insert(r->left, line);
     }
-        /*else this will be in the right subtree*/
+                                          /*else this will be in the right subtree*/
     else {
-        //printf("goin down right\n");
         r->right = insert(r->right, line);
     }
+
     return r;
+
 }
+
 
 void list(struct tnode *r){ /*Lists names in tree in order format */
     if (r){
@@ -97,6 +100,7 @@ void list(struct tnode *r){ /*Lists names in tree in order format */
         list(r->right);
     }
 }
+
 
 void readFile(){
     char *word[1024];
@@ -110,13 +114,65 @@ void readFile(){
         while ((fread(word, 1, sizeof word, file)) == 1 )
             fwrite(word, 1, nread, stdout);
 
-
         printf("This is what is in file:\n");
         printf("%s\n", word);
         fclose(file);
     }
 
 }
+/*
+void sort(int *p, int size)
+{
+    int i, j;
+    for (i = 0; i < size - 1; ++i)
+    {
+        for (j = 0; j < size - i - 1; ++j)
+        {
+            if (p[j] > p[j + 1])
+            {
+                int temp;
+                temp = p[j];
+                p[j] = p[j + 1];
+                p[j + 1] = temp;
+            }
+        }
+    }
+}
+
+
+void readtestfile()
+{
+    FILE *fp;
+    char buff[1024];
+    char value;
+    char *buf[1024];
+
+    char **array = (char**)malloc(linecount * sizeof(char*))
+
+    int number_of_lines = 6;
+
+    fp = fopen("file.txt", "r");
+
+    int i = 0;
+    while((fgets(buff, 1, sizeof buff, fp)) != NULL ) {
+
+        array[i] = (char*) malloc (MAX_LINE * sizeof(char));
+        strcpy(array[i], buff);
+        i++;
+    }
+
+
+    sort(array, number_of_lines);
+
+    for (i = 1; i < number_of_lines; i++)
+    {
+        printf("value is %s", array[i]);
+    }
+    fclose(fp);
+}
+
+*/
+
 void writeFile() { //http://stackoverflow.com/questions/30792278/counting-lines-in-a-file-excluding-the-empty-lines-in-c
     FILE *f = fopen("file.txt", "a");
     if (f == NULL) {
@@ -132,13 +188,10 @@ void writeFile() { //http://stackoverflow.com/questions/30792278/counting-lines-
 
 
     fclose(f);
-
-
-
 }
 
-void employeeDelete(){  /*wrapper for deleting employee from tree if exists*/
 
+void employeeDelete(){  /*wrapper for deleting employee from tree if exists*/
 
     printf("Please enter name of employee: \n");
     getchar();
@@ -148,25 +201,27 @@ void employeeDelete(){  /*wrapper for deleting employee from tree if exists*/
 
 }
 
+
 struct tnode* employeeDelete2(struct tnode *r, char *empName){
     struct tnode *t;
 
     if(r == NULL)
         printf("Not in the system...\n");
 
-    else if( strcmp(empName, r->name) < 0)
+    else if( strcmp(empName, r->name) < 0)           /*if given negative value, the name may be in the left subtree*/
         r->left = employeeDelete2(r->left, empName);
 
-    else if(strcmp(empName, r->name) > 0)
+    else if(strcmp(empName, r->name) > 0)            /*if greater, may be in right subtree*/
         r->right = employeeDelete2(r->right, empName);
 
-    else{
-        if(r->right && r->left){
-            t = minSearch(r->left);
-            strcpy(r->name,t->name);
-            r->right = employeeDelete2(r->right,t->name);
+    else{                                                           /*If passes through both if statements..*/
+        if(r->right && r->left){  /*checks for children*/            /*we know that we found what we need to delete*/
+            t = minSearch(r->right); /*getting the min value of right subtree*/
+            strcpy(r->name,t->name); /*overwriting*/
+            r->right = employeeDelete2(r->right,t->name);  /*delete that replaced node*/
 
-        }else{
+        }else{          /* If there is only one or zero children then we can directly
+                           remove it from the tree and connect its parent to its child */
             t = r;
             if(r->right == NULL)
                 r = r->left;
@@ -179,6 +234,7 @@ struct tnode* employeeDelete2(struct tnode *r, char *empName){
 
 }
 
+
 struct tnode* minSearch(struct tnode *r){
     if(!r)
         return NULL;
@@ -189,12 +245,15 @@ struct tnode* minSearch(struct tnode *r){
         return r;
 }
 
-void padding ( char ch, int n ){
+
+void padding ( char ch, int n ){ /*Help with the format of printing the bst*/
     int i;
     for ( i = 0; i < n; i++ )
         putchar ( ch );
 }
-void structure ( struct tnode *root, int level ){
+
+
+void structure ( struct tnode *root, int level ){ /*prints the structure of bst (sideways)*/
     if ( root == NULL ) {
         padding ( '\t', level );
         puts ( "~" );

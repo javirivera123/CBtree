@@ -30,8 +30,11 @@ To delete binaries:
 
 $ make clean
 
-RESOURCES:
+#RESOURCES:
 
 for printing tree in tree structure: https://www.daniweb.com/programming/software-development/threads/146112/printing-a-binary-tree
 reference for deletion: http://www.thelearningpoint.net/computer-science/trees/binary-search-trees---c-program-source-code-and-documentation
 printing twice bug on read file: http://stackoverflow.com/questions/26668892/data-being-printed-out-twice-when-using-fread
+reviewing structure of bst: https://www.tutorialspoint.com/data_structures_algorithms/binary_search_tree.htm
+Kerningham, Brian W & Ritchie, Dennis M. "The C Programming Language, Second edition," Prentice Hall, ISBN: 0-13-115817-1.
+sorting: http://www.sanfoundry.com/c-program-sort-names-alphabetical-order/

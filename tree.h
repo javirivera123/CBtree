@@ -44,6 +44,8 @@ void padding ( char ch, int n );
 
 void structure ( struct tnode *root, int level );
 
+void sort(int *p, int size);
 
+void readtestfile();
 
 #endif //CBTREE_TREE_H
