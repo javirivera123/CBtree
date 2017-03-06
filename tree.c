@@ -6,12 +6,13 @@
 
 char *line[1024];
 char *empN[1024];
+char *word[1024];
 
 /* allocates memory for new node */
 struct tnode *btAlloc(){
-    struct tnode *t =  (struct tnode*) malloc(sizeof(struct tnode));
+    struct tnode *t =  (struct tnode*) malloc(sizeof(struct tnode));   /* allocates memory for new node */
     t->left = t->right = NULL;
-    strcpy(t->name,line);
+    strcpy(t->name,line);      /*copies whatever is in line to name value */
     return t;
 }
 
@@ -39,14 +40,13 @@ void userSelection() {
         switch (input) {
             case 1 :
                 enterName();
-                printf("New employee has been inserted!...\n");
                 break;
             case 2 :
                 employeeDelete();
                 printf("Employee has been deleted...\n");
                 break;
             case 3 :
-                structure(root, 2);
+                structure(root, 3);
                 break;
             case 4 :
                 readFile();
@@ -76,8 +76,9 @@ struct tnode* insert(struct tnode *r, char *line) {
         return temp;
     }
 
-    if (strcmp(r->name, line) == 0) {
-        printf("HEADS UP! Someone with same name already exists in file...\n");
+    if (strcmp(r->name, line) == 0) {   /* checks for repeated values */
+        printf("HEADS UP! Someone with same name already exists in file...not going to insert.\n");
+        return r;
     }
 
     if( strcmp(line,r->name) < 0 ){        /* compares if should be in left subtree, uses ASCII values*/
@@ -92,88 +93,26 @@ struct tnode* insert(struct tnode *r, char *line) {
 
 }
 
-
-void list(struct tnode *r){ /*Lists names in tree in order format */
-    if (r){
-        list(r->left);
-        printf(", %s", r->name);
-        list(r->right);
-    }
-}
-
-
+/*reads file and inserts all names that are not in the tree */
 void readFile(){
-    char *word[1024];
     FILE *file;
-    size_t nread;
+    int i;
 
     file = fopen("file.txt", "r");
     if (!file)
         printf("No file found\n");
     else {
-        while ((fread(word, 1, sizeof word, file)) == 1 )
-            fwrite(word, 1, nread, stdout);
-
-        printf("This is what is in file:\n");
-        printf("%s\n", word);
+        while (fgets(line,1024,file)) {
+            printf("scanned word: %s", line);
+            root = insert(root, line);
+        }
         fclose(file);
     }
 
 }
-/*
-void sort(int *p, int size)
-{
-    int i, j;
-    for (i = 0; i < size - 1; ++i)
-    {
-        for (j = 0; j < size - i - 1; ++j)
-        {
-            if (p[j] > p[j + 1])
-            {
-                int temp;
-                temp = p[j];
-                p[j] = p[j + 1];
-                p[j + 1] = temp;
-            }
-        }
-    }
-}
 
-
-void readtestfile()
-{
-    FILE *fp;
-    char buff[1024];
-    char value;
-    char *buf[1024];
-
-    char **array = (char**)malloc(linecount * sizeof(char*))
-
-    int number_of_lines = 6;
-
-    fp = fopen("file.txt", "r");
-
-    int i = 0;
-    while((fgets(buff, 1, sizeof buff, fp)) != NULL ) {
-
-        array[i] = (char*) malloc (MAX_LINE * sizeof(char));
-        strcpy(array[i], buff);
-        i++;
-    }
-
-
-    sort(array, number_of_lines);
-
-    for (i = 1; i < number_of_lines; i++)
-    {
-        printf("value is %s", array[i]);
-    }
-    fclose(fp);
-}
-
-*/
-
-void writeFile() { //http://stackoverflow.com/questions/30792278/counting-lines-in-a-file-excluding-the-empty-lines-in-c
+/* gets user input to write to the file */
+void writeFile() {
     FILE *f = fopen("file.txt", "a");
     if (f == NULL) {
         printf("No file detected\n");
@@ -184,14 +123,14 @@ void writeFile() { //http://stackoverflow.com/questions/30792278/counting-lines-
     printf("What is the name of the employee?\n");
     getchar();
     fgets(word, 1024, stdin);
-    fprintf(f, "%s", word);
+    fprintf(f, "%s", word);    /* prints to next line in file */
 
 
     fclose(f);
 }
 
-
-void employeeDelete(){  /*wrapper for deleting employee from tree if exists*/
+/*wrapper for deleting employee from tree if exists*/
+void employeeDelete(){
 
     printf("Please enter name of employee: \n");
     getchar();
@@ -201,9 +140,9 @@ void employeeDelete(){  /*wrapper for deleting employee from tree if exists*/
 
 }
 
-
+/* recursive method for deleting node from tree */
 struct tnode* employeeDelete2(struct tnode *r, char *empName){
-    struct tnode *t;
+    struct tnode *t;   /* declaring temp */
 
     if(r == NULL)
         printf("Not in the system...\n");
@@ -220,9 +159,8 @@ struct tnode* employeeDelete2(struct tnode *r, char *empName){
             strcpy(r->name,t->name); /*overwriting*/
             r->right = employeeDelete2(r->right,t->name);  /*delete that replaced node*/
 
-        }else{          /* If there is only one or zero children then we can directly
-                           remove it from the tree and connect its parent to its child */
-            t = r;
+        }else{          /* If there's 1 < children, we remove it from the tree and link its parent to its child */
+            t = r; /* assigning temp the child node */
             if(r->right == NULL)
                 r = r->left;
             else if(r->left == NULL)
@@ -234,7 +172,7 @@ struct tnode* employeeDelete2(struct tnode *r, char *empName){
 
 }
 
-
+/* finds minimum in tree */
 struct tnode* minSearch(struct tnode *r){
     if(!r)
         return NULL;
@@ -249,7 +187,7 @@ struct tnode* minSearch(struct tnode *r){
 void padding ( char ch, int n ){ /*Help with the format of printing the bst*/
     int i;
     for ( i = 0; i < n; i++ )
-        putchar ( ch );
+        putchar ( ch );  /* places indention */
 }
 
 

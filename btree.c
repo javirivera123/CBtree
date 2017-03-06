@@ -4,7 +4,6 @@
 
 int main() {
     printf("\nWELCOME TO ACME SOLUTIONS!\n");
-    //readtestfile();
     userSelection();
     return 0;
    }

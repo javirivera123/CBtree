@@ -38,3 +38,4 @@ printing twice bug on read file: http://stackoverflow.com/questions/26668892/dat
 reviewing structure of bst: https://www.tutorialspoint.com/data_structures_algorithms/binary_search_tree.htm
 Kerningham, Brian W & Ritchie, Dennis M. "The C Programming Language, Second edition," Prentice Hall, ISBN: 0-13-115817-1.
 sorting: http://www.sanfoundry.com/c-program-sort-names-alphabetical-order/
+File reading: //http://stackoverflow.com/questions/30792278/counting-lines-in-a-file-excluding-the-empty-lines-in-c
